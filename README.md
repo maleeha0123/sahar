@@ -10,7 +10,7 @@
 - Member 2: Neeharika Niroup Gupta - Mar Athanasius College of Engineering,Kothamangalam
 
 ### Hosted Project Link
-[mention your project hosted project link here]
+https://github.com/maleeha0123/sahar/edit/main/README.md
 
 ### Project Description
         Through our project we aim to create a secure, offline-first messaging app optimized for intermittent satellite communication, helping Afghan women stay connected in a highly censored and oppressive regime.Our web page represents a mobile app that can be downloaded in rudimentary phones, it simulates the movement of an emergency message from the user in a remote location , to a 'relay' persons ,through a mesh network ,the message hops from one node to next ,till the message reaches a node that has internet connectivity ,on reaching such a node, message is then transmitted to respective NGO.
@@ -42,9 +42,6 @@ For Software:
 - programs where stored with .html extension,and output was seen on default browser
 
 ### Implementation
-For Software:
-# Installation
-[commands]
 
 # Run
 ### Below is the code for simulation of keypad,and sending of alphabetic and numeric values to relay and printing the time when the message was recieved after toggling connectivity ,then the messages are transmitted to needed NGO
@@ -421,19 +418,6 @@ For Software:
 ![Screenshot3](Add screenshot 3 here with proper name)
 *Add caption explaining what this shows*
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
-
-For Hardware:
-
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
 # Build Photos
 ![Team](Add photo of your team here)
 
@@ -449,7 +433,7 @@ For Hardware:
 
 ### Project Demo
 # Video
-
+Included in repository
 
 # Additional Demos
 [Add any extra demo materials/links]
