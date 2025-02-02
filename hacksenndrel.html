@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Communication Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .keypad-container {
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 320px;
+            margin-bottom: 40px; /* Space between keypad and relay section */
+        }
+        .keypad-container h1 {
+            color: #333;
+        }
+        .keypad-container button {
+            padding: 20px;
+            font-size: 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+        }
+        .keypad-container button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Relay and message queue styling */
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            color: white;
+            border-radius: 5px;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .status.connected {
+            background-color: #4CAF50;
+        }
+        .status.disconnected {
+            background-color: #f44336;
+        }
+        .message-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 150px;
+            max-height: 300px;
+            overflow-y: auto;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .message {
+            background-color: #f9f9f9;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .transmitting {
+            color: #ff9800;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Keypad Section (Emergency Message Input) -->
+    <div class="keypad-container">
+        <h1>Sahar Lifeline</h1>
+        <div class="output" id="outputMessage"></div>
+        
+        <div class="row">
+            <button onclick="sendEmergencyMessage(1)">1</button>
+            <button onclick="pressKey(2)">2<br>ABC</button>
+            <button onclick="pressKey(3)">3<br>DEF</button>
+        </div>
+        <div class="row">
+            <button onclick="pressKey(4)">4<br>GHI</button>
+            <button onclick="pressKey(5)">5<br>JKL</button>
+            <button onclick="pressKey(6)">6<br>MNO</button>
+        </div>
+        <div class="row">
+            <button onclick="pressKey(7)">7<br>PQRS</button>
+            <button onclick="pressKey(8)">8<br>TUV</button>
+            <button onclick="pressKey(9)">9<br>WXYZ</button>
+        </div>
+        <div class="row">
+            <button onclick="pressKey(0)">0</button>
+        </div>
+        
+        <div class="row">
+            <button onclick="sendMessage()">Send</button>
+            <button onclick="clearMessage()">Clear</button>
+        </div>
+    </div>
+
+    <!-- Relay Section (Message Queue and Connectivity) -->
+    <div id="status" class="status disconnected">
+        No connectivity
+    </div>
+    
+    <div class="message-box" id="messageBox">
+        <!-- Emergency messages will be listed here -->
+    </div>
+    
+    <button onclick="simulateMessage()">Receive Message</button>
+    <button onclick="simulateConnectivity()">Toggle Connectivity</button>
+    <button onclick="sendMessages()">Send Messages to NGO</button>
+
+    <script>
+        let message = "";
+        let lastKey = null;
+        let keyPressCount = 0;
+        let keyPressTimeout;
+        const keyMappings = {
+            2: "ABC",
+            3: "DEF",
+            4: "GHI",
+            5: "JKL",
+            6: "MNO",
+            7: "PQRS",
+            8: "TUV",
+            9: "WXYZ"
+        };
+        const emergencyMessages = {
+            1: "Rescue",
+            2: "Medical",
+            3: "Amenities"
+        };
+
+        // Emergency message functions
+        function pressKey(key) {
+            clearTimeout(keyPressTimeout);
+            
+            if (key === lastKey) {
+                keyPressCount++;
+            } else {
+                if (lastKey !== null) {
+                    message += keyMappings[lastKey][(keyPressCount - 1) % keyMappings[lastKey].length];
+                }
+                lastKey = key;
+                keyPressCount = 1;
+            }
+
+            keyPressTimeout = setTimeout(() => {
+                if (keyMappings[lastKey]) {
+                    message += keyMappings[lastKey][(keyPressCount - 1) % keyMappings[lastKey].length];
+                } else {
+                    message += lastKey;
+                }
+                lastKey = null;
+                keyPressCount = 0;
+                document.getElementById("outputMessage").innerText = message;
+            }, 3000);
+        }
+
+        function sendEmergencyMessage(key) {
+            let emergencyText = emergencyMessages[key];
+            if (emergencyText) {
+                let asciiValues = emergencyText.split('').map(char => char.charCodeAt(0)).join(' ');
+                document.getElementById("outputMessage").innerText = `Emergency Message: ${emergencyText}\nASCII Values: ${asciiValues}`;
+            }
+        }
+
+        function sendMessage() {
+            if (message.trim() === "") {
+                alert("Message cannot be empty");
+                return;
+            }
+            let asciiValues = message.split('').map(char => char.charCodeAt(0)).join(' ');
+            document.getElementById("outputMessage").innerText = `Message Sent: ${message}\nASCII Values: ${asciiValues}`;
+        }
+
+        function clearMessage() {
+            message = "";
+            lastKey = null;
+            keyPressCount = 0;
+            document.getElementById("outputMessage").innerText = "";
+        }
+
+        // Relay and Message Queue Section
+        let messageQueue = [];
+        let isConnected = false;
+
+        function simulateMessage() {
+            const emergencyMessage = `Emergency Request: ${new Date().toLocaleTimeString()}`;
+            messageQueue.push(emergencyMessage);
+            updateMessageBox();
+        }
+
+        function simulateConnectivity() {
+            isConnected = !isConnected;
+            const statusElement = document.getElementById("status");
+
+            if (isConnected) {
+                statusElement.innerText = "Connectivity Available";
+                statusElement.classList.remove("disconnected");
+                statusElement.classList.add("connected");
+            } else {
+                statusElement.innerText = "No Connectivity";
+                statusElement.classList.remove("connected");
+                statusElement.classList.add("disconnected");
+            }
+        }
+
+        function updateMessageBox() {
+            const messageBox = document.getElementById("messageBox");
+            messageBox.innerHTML = "";
+
+            messageQueue.forEach((msg) => {
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message");
+                messageElement.innerText = msg;
+                messageBox.appendChild(messageElement);
+            });
+        }
+
+        function sendMessages() {
+            if (isConnected && messageQueue.length > 0) {
+                const statusElement = document.getElementById("status");
+                statusElement.innerHTML = "Transmitting Messages...";
+                statusElement.classList.add("transmitting");
+
+                setTimeout(() => {
+                    messageQueue = [];
+                    updateMessageBox();
+
+                    statusElement.innerHTML = "Messages Sent Successfully";
+                    setTimeout(() => {
+                        statusElement.classList.remove("transmitting");
+                        statusElement.classList.remove("connected");
+                        statusElement.classList.add("disconnected");
+                        statusElement.innerHTML = "No Connectivity";
+                    }, 2000);
+                }, 3000);
+            } else {
+                alert("No connectivity or no messages to send");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Mesh Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .node { display: inline-block; padding: 15px; margin: 10px; border: 2px solid black; }
+        .connected { background-color: lightgreen; }
+        .disconnected { background-color: lightcoral; }
+        .message-box { border: 1px solid black; padding: 10px; min-height: 50px; }
+    </style>
+</head>
+<body>
+    <h1>Emergency Mesh Network</h1>
+    <div id="nodes"></div>
+    <button onclick="toggleConnectivity()">Toggle Connectivity</button>
+    <button onclick="sendMessage()">Send Emergency Message</button>
+    <button onclick="checkForInternetNode()">Transmit to NGO</button>
+
+    <script>
+        const encryptionKey = "SecretPassphrase";
+        const nodes = [
+            { id: 1, connected: false, queue: [] },
+            { id: 2, connected: false, queue: [] },
+            { id: 3, connected: false, queue: [] },
+            { id: 4, connected: true, queue: [] } // Internet Node
+        ];
+
+        function encryptMessage(message) {
+            return CryptoJS.AES.encrypt(message, encryptionKey).toString();
+        }
+        function decryptMessage(encryptedMessage) {
+            let bytes = CryptoJS.AES.decrypt(encryptedMessage, encryptionKey);
+            return bytes.toString(CryptoJS.enc.Utf8);
+        }
+
+        function toggleConnectivity() {
+            nodes.forEach(node => { node.connected = Math.random() > 0.5; });
+            updateNodes();
+        }
+
+        function updateNodes() {
+            let nodesDiv = document.getElementById("nodes");
+            nodesDiv.innerHTML = "";
+            nodes.forEach(node => {
+                let nodeDiv = document.createElement("div");
+                nodeDiv.className = `node ${node.connected ? 'connected' : 'disconnected'}`;
+                nodeDiv.innerHTML = `<strong>Node ${node.id}</strong><br>Messages: ${node.queue.length}`;
+                nodesDiv.appendChild(nodeDiv);
+            });
+        }
+
+        function sendMessage() {
+            let message = "Emergency Request";
+            let encryptedMsg = encryptMessage(message);
+            nodes[0].queue.push(encryptedMsg);
+            passMessage(0);
+        }
+
+        function passMessage(index) {
+            if (index >= nodes.length - 1) return;
+            let nextNode = nodes[index + 1];
+            if (nextNode.connected) {
+                nextNode.queue.push(...nodes[index].queue);
+                nodes[index].queue = [];
+                updateNodes();
+                passMessage(index + 1);
+            }
+        }
+
+        function checkForInternetNode() {
+            let internetNode = nodes.find(node => node.connected);
+            if (internetNode) {
+                let decryptedMessages = internetNode.queue.map(encryptMsg => decryptMessage(encryptMsg));
+                alert(`Internet found at Node ${internetNode.id}. Messages sent: \n${decryptedMessages.join("\n")}`);
+                internetNode.queue = [];
+                updateNodes();
+            } else {
+                alert("No internet nodes available. Messages will keep hopping.");
+            }
+        }
+
+        updateNodes();
+    </script>
+</body>
+</html>
