@@ -10,7 +10,7 @@
 - Member 2: Neeharika Niroup Gupta - Mar Athanasius College of Engineering,Kothamangalam
 
 ### Hosted Project Link
-https://github.com/maleeha0123/sahar/edit/main/README.md
+ https://maleeha0123.github.io/sahar/
 
 ### Project Description
         Through our project we aim to create a secure, offline-first messaging app optimized for intermittent satellite communication, helping Afghan women stay connected in a highly censored and oppressive regime.Our web page represents a mobile app that can be downloaded in rudimentary phones, it simulates the movement of an emergency message from the user in a remote location , to a 'relay' persons ,through a mesh network ,the message hops from one node to next ,till the message reaches a node that has internet connectivity ,on reaching such a node, message is then transmitted to respective NGO.
