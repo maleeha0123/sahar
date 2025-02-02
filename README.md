@@ -408,35 +408,17 @@ Both the above codes when used together, will allow user to give a message, the 
 ### Project Documentation
 For Software:
 
-# Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+# Screenshots 
+Added to sahar repository
 
 # Build Photos
-![Team](Add photo of your team here)
 
-
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
 
 ### Project Demo
 # Video
-Included in repository
+Included in sahar repository
 
-# Additional Demos
-[Add any extra demo materials/links]
+
 
 
 ---
