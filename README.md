@@ -47,7 +47,7 @@ For Software:
 [commands]
 
 # Run
-##Below is the code for simulation of keypad,and sending of alphabetic and numeric values to relay and printing the time when the message was recieved after toggling connectivity ,then the messages are transmitted to needed NGO
+### Below is the code for simulation of keypad,and sending of alphabetic and numeric values to relay and printing the time when the message was recieved after toggling connectivity ,then the messages are transmitted to needed NGO
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -317,7 +317,7 @@ For Software:
     </script>
 </body>
 </html>
-##Below is the code for encryption using AES algorithm and we included the functionality of there being 4 nodes,connected together by mesh network.We intended it to act as extra feature to above program code,so finally it comes as though the input from the keypad goes to a particular relay node in a mesh network of many relays ,there is a message counter for each node, that increments each time a message reaches it.
+### Below is the code for encryption using AES algorithm and we included the functionality of there being 4 nodes,connected together by mesh network.We intended it to act as extra feature to above program code,so finally it comes as though the input from the keypad goes to a particular relay node in a mesh network of many relays ,there is a message counter for each node, that increments each time a message reaches it.
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -454,10 +454,6 @@ For Hardware:
 # Additional Demos
 [Add any extra demo materials/links]
 
-## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
 
 ---
 Made with ❤️ at TinkerHub
